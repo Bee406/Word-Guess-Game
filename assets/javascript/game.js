@@ -1,55 +1,90 @@
 // Create array for computer to choose from
 var wordChoices = ["panda", "zebra", "monkey", "dolphin", "penguin"];
 
-//Set number of wins
-var wins = 0;
-document.getElementById("wins").innerHTML = wins;
+document.addEventListener("click", gameStartFunction);
 
-//This function is run when the user presses a key
-document.onkeyup = function(start){
-
+function gameStartFunction() {
     //Randomly chooses a choice from the wordChoices array
-    var wordSelection = wordChoices[Math.floor(Math.random()*wordChoices.length)];
+    var wordSelection = wordChoices[Math.floor(Math.random() * wordChoices.length)];
 
     //Check words are being randomly selected
-    console.log (wordSelection);
+    console.log(wordSelection);
 
     //Create underscores for number of letters in the selected word
-    var wordAnswer = [];
-    for (var i=0; i<wordSelection.length; i++){
-    wordAnswer[i]="_ ";}
-    document.getElementById("spaces").innerHTML = wordAnswer;
+    var spaces = [];
+    for (var i = 0; i < wordSelection.length; i++) {
+        spaces[i] = "_ ";
+    };
 
-    //Create a variable to track the letters left to guess and know when the player has won
-    var lettersLeft = wordSelection.length;
+    //Get rid of commas, make string out of array?
+    var wordAnswer = document.getElementById("spaces");
+    wordAnswer.innerHTML = spaces.join(" ");
 
-    //User guess
-    var userGuess = event.key;
 
     //Determine number of guesses the user will get...we'll start at 15
     var guessesLeft = 15;
-    document.getElementById("guesses").innerHTML = guessesLeft; 
+    document.getElementById("guesses").innerHTML = "Number of guesses remaining: " + guessesLeft;
 
-    //display key that was pressed
-    document.getElementById("key-pressed").innerHTML = "You guessed " + userGuess;
+    //list of guessed letters 
+    var guessedLetters = [];
+    
 
-    //use for loop so if the letter guessed is in the word selected it will update in game
-    for (var j=0; j<wordSelection.length; j++){
-        if (wordSelection[j]===userGuess){
-            wordAnswer[j] = userGuess;
-            lettersLeft--;
+    //letters in the word
+    var lettersLeft = wordSelection.length;
+
+    //user's wins
+    var win = 0;
+    document.getElementById("wins").innerHTML = "Wins: " + win;
+
+
+    //Function for user to start guessing
+    document.onkeyup = function gamePlayFunction() {
+        if (guessesLeft > 0 && lettersLeft > 0) {
+            var userGuess = event.key;
+
+            //if letter has not been guessed, add it to the guessed letter array
+            if (guessedLetters.indexOf(userGuess) === -1) {
+                guessedLetters.push(userGuess);
+                console.log(guessedLetters);
+
+                //Get rid of commas, make string out of array?, display on page
+                var guessList = document.getElementById("guessed");
+                guessList.innerHTML = "Letters guessed: " + guessedLetters.join(" ");
+
+                //display updated guesses left
+                guessesLeft--;
+                document.getElementById("guesses").innerHTML = "Number of guesses remaining: " + guessesLeft;
+            };
+
+            //use for loop so if the letter guessed is in the word selected it will update in game
+            for (var j = 0; j < wordSelection.length; j++) {
+                if (userGuess === wordSelection[j]) {
+                    console.log("Letter guessed is in selected word");
+                    //maybe use indexof
+                    console.log(wordSelection.indexOf(userGuess));
+                    lettersLeft--
+                    console.log(lettersLeft);
+                }
             }
-        else {guessesLeft--;}
+
+            if (lettersLeft === 0) {
+                alert("You win!");
+                win++;
+                document.getElementById("wins").innerHTML = "Wins: " + win;
+                function gameStartFunction() { };
             }
-
-    //Creating an empty arrary for guessed letters to be pushed into
-        var guessedLetters = [];
-
-    //Display guessed letters on the screen
-        for (var i=0; i<guessedLetters.length; i++){
-        document.getElementById("letters-guessed").innerHTML = guessedLetters++
+        }
+        if (guessesLeft < 1) {
+            alert("You lose!");
+            function gameStartFunction() { };
         }
     }
+}
+
+
+
+
+
 
 
 
