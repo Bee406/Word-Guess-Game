@@ -2,30 +2,39 @@
 
 <html>
 
-    <head>
-        <meta charset="utf-8" />
-        <title>Word Guess Game</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" media="screen" href="assets/css/reset.css" />
-        <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
-    </head>
+<head>
+    <meta charset="utf-8" />
+    <title>Word Guess Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/reset.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
+    
+</head>
 
-    <body>
-        <h1>Hangman</h1>
-        <h2>We Bougt A Zoo!</h2>
-        <div>
-            <p>Click anywhere to get started!</p>
-        </div>
-        <div>
-            <p id="guesses"></p>
-            <p id="guessed"></p>
-            <p id="spaces"></p>
-            <p id="key-pressed"></p>
-            <p id="wins"></p>
-            
-        </div>
-       
-        <script src="assets/javascript/game.js"></script>   
-    </body>
+<header>
+    <h1>Word Guess Game</h1>
+    <h2>We Bougt A Zoo!</h2>
+</header>
 
-    </html>
+<body class="bg"> 
+    <p id="start-dialog">Click anywhere to begin!</p>
+    <div class="play-dialog">
+        <p id="guesses"></p>
+    </div>
+    
+    <div id="win">YOU WIN!</div>
+    <div id="lose">YOU LOSE!</div>
+        
+    <div class="play-dialog">
+        <p id="guessed"></p>
+        <p id="spaces"></p>
+        <p id="wins"></p>
+    </div>
+    
+
+
+</body>
+
+<script src="assets/javascript/game.js"></script>
+
+</html>

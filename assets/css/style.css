@@ -1,3 +1,45 @@
-h1, h2, p {
+header {
+    background: lightgrey;
+    opacity: .8;
+    width: 40%;
     text-align: center;
+    margin: 1% 0 0 1%;
+    border-radius: 25px;
 }
+h1 {
+    padding: 2% 5%;
+    font-size: 4rem;
+}
+
+h2 {
+    font-size: 3rem;
+    font-style: italic;
+    padding:0 5%;
+}
+
+.bg{
+    background-image: url(../images/background.jpg);
+    height: 100%;
+    background-repeat: no-repeat;
+}
+
+p {
+    font-size: 2.5rem;
+    padding: 1.5rem;
+    text-align: center;
+    color: white;
+    margin-top: 5%;
+
+}
+
+#win, #lose {
+    padding: 40%;
+    font-size: 4rem;
+    background: lightgrey;
+    border-radius: 25px;
+    padding: 2% 5%;
+    text-align: center;
+    margin-bottom: 35%
+    z-index: 2;
+}
+

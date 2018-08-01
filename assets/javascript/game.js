@@ -1,9 +1,36 @@
 // Create array for computer to choose from
 var wordChoices = ["panda", "zebra", "monkey", "dolphin", "penguin"];
 
+//list of guessed letters 
+var guessedLetters = [];
+
+// Define click to start text
+var clickText = document.getElementById("start-dialog");
+
+//Define win text
+var winText = document.getElementById("win");
+
+//Define lose text
+var loseText = document.getElementById("lose");
+
+//Hide win and lose text
+winText.style.display = "none";
+loseText.style.display = "none";
+
+var totalWins = [];
+var reducer = (accumulator, currentValue) => accumulator + currentValue;
+
+//Watch document for click to start game function
 document.addEventListener("click", gameStartFunction);
 
 function gameStartFunction() {
+
+    //Make start, win, and lose text dissapear
+    winText.style.display = "none";
+    loseText.style.display = "none";
+    clickText.style.display = "none";
+
+
     //Randomly chooses a choice from the wordChoices array
     var wordSelection = wordChoices[Math.floor(Math.random() * wordChoices.length)];
 
@@ -21,20 +48,23 @@ function gameStartFunction() {
     wordAnswer.innerHTML = spaces.join(" ");
 
 
-    //Determine number of guesses the user will get...we'll start at 15
-    var guessesLeft = 15;
+    //Determine number of guesses the user will get
+    var guessesLeft = 8;
     document.getElementById("guesses").innerHTML = "Number of guesses remaining: " + guessesLeft;
 
-    //list of guessed letters 
+    //chaange list of guessed letters to 0
     var guessedLetters = [];
-    
+    var guessList = [];
 
     //letters in the word
     var lettersLeft = wordSelection.length;
 
     //user's wins
     var win = 0;
-    document.getElementById("wins").innerHTML = "Wins: " + win;
+
+    //Get rid of commas, make string out of array?, display on page
+    var guessList = document.getElementById("guessed");
+    guessList.length = 0;
 
 
     //Function for user to start guessing
@@ -47,8 +77,6 @@ function gameStartFunction() {
                 guessedLetters.push(userGuess);
                 console.log(guessedLetters);
 
-                //Get rid of commas, make string out of array?, display on page
-                var guessList = document.getElementById("guessed");
                 guessList.innerHTML = "Letters guessed: " + guessedLetters.join(" ");
 
                 //display updated guesses left
@@ -68,18 +96,24 @@ function gameStartFunction() {
             }
 
             if (lettersLeft === 0) {
-                alert("You win!");
+                winText.style.display = "block";
                 win++;
-                document.getElementById("wins").innerHTML = "Wins: " + win;
-                function gameStartFunction() { };
+                totalWins.push(win);
+                document.getElementById("wins").innerHTML = "Wins: " + totalWins.reduce(reducer);
             }
         }
         if (guessesLeft < 1) {
-            alert("You lose!");
-            function gameStartFunction() { };
+            loseText.style.display = "block";
+
         }
     }
+
+    function clickStartHidden() {
+        clickText.style.visibility === "hidden";
+    }
 }
+
+//look at scope activity for underscore replacement?
 
 
 
