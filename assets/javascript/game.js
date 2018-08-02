@@ -1,9 +1,6 @@
 // Create array for computer to choose from
 var wordChoices = ["panda", "zebra", "monkey", "dolphin", "penguin"];
 
-//list of guessed letters 
-var guessedLetters = [];
-
 // Define click to start text
 var clickText = document.getElementById("start-dialog");
 
@@ -17,8 +14,13 @@ var loseText = document.getElementById("lose");
 winText.style.display = "none";
 loseText.style.display = "none";
 
+//Sum of total wins
 var totalWins = [];
 var reducer = (accumulator, currentValue) => accumulator + currentValue;
+
+//Define guessed letters and list 
+var guessedLetters = [];
+var guessList = [];
 
 //Watch document for click to start game function
 document.addEventListener("click", gameStartFunction);
@@ -29,7 +31,6 @@ function gameStartFunction() {
     winText.style.display = "none";
     loseText.style.display = "none";
     clickText.style.display = "none";
-
 
     //Randomly chooses a choice from the wordChoices array
     var wordSelection = wordChoices[Math.floor(Math.random() * wordChoices.length)];
@@ -52,19 +53,14 @@ function gameStartFunction() {
     var guessesLeft = 8;
     document.getElementById("guesses").innerHTML = "Number of guesses remaining: " + guessesLeft;
 
-    //chaange list of guessed letters to 0
-    var guessedLetters = [];
-    var guessList = [];
-
     //letters in the word
     var lettersLeft = wordSelection.length;
 
     //user's wins
     var win = 0;
 
-    //Get rid of commas, make string out of array?, display on page
+    //Display guesses
     var guessList = document.getElementById("guessed");
-    guessList.length = 0;
 
 
     //Function for user to start guessing
@@ -72,44 +68,59 @@ function gameStartFunction() {
         if (guessesLeft > 0 && lettersLeft > 0) {
             var userGuess = event.key;
 
-            //if letter has not been guessed, add it to the guessed letter array
+            //check if letter has been guessed 
             if (guessedLetters.indexOf(userGuess) === -1) {
-                guessedLetters.push(userGuess);
-                console.log(guessedLetters);
 
+                //add guess to array of guessed letters
+                guessedLetters.push(userGuess);
+
+                //put spaces between letters and disply on document
                 guessList.innerHTML = "Letters guessed: " + guessedLetters.join(" ");
 
-                //display updated guesses left
+                //subtract 1 from guesses left
                 guessesLeft--;
-                document.getElementById("guesses").innerHTML = "Number of guesses remaining: " + guessesLeft;
-            };
 
-            //use for loop so if the letter guessed is in the word selected it will update in game
-            for (var j = 0; j < wordSelection.length; j++) {
-                if (userGuess === wordSelection[j]) {
-                    console.log("Letter guessed is in selected word");
-                    //maybe use indexof
-                    console.log(wordSelection.indexOf(userGuess));
-                    lettersLeft--
-                    console.log(lettersLeft);
+                //display updated guesses left
+                document.getElementById("guesses").innerHTML = "Number of guesses remaining: " + guessesLeft;
+
+
+                //check each letter in the selected word to determine if guess is correct
+                for (var j = 0; j < wordSelection.length; j++) {
+                    if (userGuess === wordSelection[j]) {
+                        console.log("Letter guessed is in selected word");
+
+                        //index in selected word of correct guess
+                        console.log(wordSelection.indexOf(userGuess));
+
+                        //subtract 1 from letters left to guess
+                        lettersLeft--
+                        console.log(lettersLeft);
+                    }
+                }
+                //game over if letters left = 0 (user guessed all letters in the word)
+                if (lettersLeft === 0) {
+
+                    //display winning text on document
+                    winText.style.display = "block";
+
+                    //add 1 to wins
+                    win++;
+
+                    //push this win into totalWins array
+                    totalWins.push(win);
+
+                    //reduce totalWins array to sum and display on document
+                    document.getElementById("wins").innerHTML = "Wins: " + totalWins.reduce(reducer);
                 }
             }
-
-            if (lettersLeft === 0) {
-                winText.style.display = "block";
-                win++;
-                totalWins.push(win);
-                document.getElementById("wins").innerHTML = "Wins: " + totalWins.reduce(reducer);
-            }
         }
+        //game over if guesses left is less than one
         if (guessesLeft < 1) {
+
+            //display losing text on document
             loseText.style.display = "block";
 
         }
-    }
-
-    function clickStartHidden() {
-        clickText.style.visibility === "hidden";
     }
 }
 
