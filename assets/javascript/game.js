@@ -23,7 +23,7 @@ document.addEventListener("click", gameStartFunction);
 
 function gameStartFunction() {
 
-    //Make start, win, and lose text dissapear. Could potentially use newdiv here??
+    //Make start, win, and lose text dissapear.
     winText.style.display = "none";
     loseText.style.display = "none";
     clickText.style.display = "none";
@@ -64,7 +64,7 @@ function gameStartFunction() {
     //Function for user to start guessing
     document.onkeyup = function gamePlayFunction() {
         if (guessesLeft > 0 && lettersLeft > 0) {
-            var userGuess = event.key.toLowerCase(;
+            var userGuess = event.key.toLowerCase();
 
             //check if letter has been guessed 
             if (guessedLetters.indexOf(userGuess) === -1) {
